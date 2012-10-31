@@ -18,9 +18,15 @@
 		<!-- For syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
 
+	    <script src="js/jquery-1.8.2.js"></script>
+	    <script src="../../jquery-qrcode/jquery.qrcode.min.js" type="text/javascript"></script>
+
 		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
 		<script>
 			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+			
+			var ip = '192.168.1.66';
+			ip = 'flashpatric.com';
 		</script>
 
 		<!--[if lt IE 9]>
@@ -34,477 +40,233 @@
 
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
-		    <section>
-		        <h1><img src="img/logo.png" style="border: none;background: none; box-shadow: none;"></h1>
-				<p>A scalable real-time backend for your web app<img src="img/firebase_hero_graphic.png" style="border: none;background: none; box-shadow: none;"></p>
-				<div>@flashpatric</div>
-			</section>
-			<section>
-				<section>
-					<h2 style="">What?!</h2>
-					<br>
-					<br>
-					<div>Cloud storage</div>
-					<div>Synchronize data in real-time</div>
-					<div>Easy to set up</div>
-					<div>Acts as a normal REST endpoint</div>
+			    <section>
+			        <h1><img src="img/logo.png" style="border: none;background: none; box-shadow: none;"></h1>
+					<p>A scalable real-time backend for your web app<img src="img/firebase_hero_graphic.png" style="border: none;background: none; box-shadow: none;"></p>
+					<div><a href="http://twitter.com/flashpatric">@flashpatric</a></div>
+					<aside class="notes">
+						How many have heard of Firebase?
+						Would you like to not having to think about the backend part of your projects?
+						Have you ever needed real-time data in your projects?
+					</aside>
 				</section>
 				<section>
-					<h2>Collaborative experiences</h2>
-					<br>
-					<br>
-					<div>Betting sites</div>
-					<div>Multiplayer games</div>
-					<div>Chats</div>
-				</section>
-			</section>
-			<section>
-				<section>
-					<h2>How?</h2>
-				    <br>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">&lt;script src='//static.firebase.com/v0/firebase.js'&gt;&lt;/script&gt;</code></pre>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">var ref = new Firebase('https://gamma.firebase.com/flashpatric/');</code></pre>
+					<section>
+						<h2>Preparations</h2>
+						<br>
+						<br>
+						<div>Pick up your mobile phones and connect to:</div>
+						<div style="margin:10px auto;padding:10px;border:4px solid #000;width:300px;background-color:#fff;color:#000;">
+							<div><em>SSID:</em> FooCafe</div>
+							<div><em>User:</em> guest</div>
+							<div><em>Pass:</em> wtf!omg!4G</div>
+						</div>
+					</section>
 				</section>
 				<section>
-					<h2>Navigating in references</h2>
-					<br>
-					<div>child()</div>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">var users = ref.child('users');
+					<section>
+						<h2>WTH is it?</h2>
+						<br>
+						<br>
+						<div>
+							<p class="fragment">Cloud storage</p>
+							<p class="fragment">Synchronize data in real-time</p>
+							<p class="fragment">Easy to set up</p>
+							<p class="fragment">Acts as a normal REST endpoint</p>
+							<p class="fragment">Scales with your project</p>
+						</div>
+					</section>
+					<section>
+						<h2>What it can be used for</h2>
+						<br>
+						<br>
+						<div>
+							<p class="fragment">Collaborative experiences</p>
+							<p class="fragment">Multiplayer games</p>
+							<p class="fragment">Stock markets</p>
+							<p class="fragment">Betting sites</p>
+							<p class="fragment">Chats</p>
+							<p class="fragment">Etc</p>
+						</div>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Simple setup</h2>
+					    <br>
+						<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">&lt;script src='//static.firebase.com/v0/firebase.js'&gt;&lt;/script&gt;</code></pre>
+						<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">var ref = new Firebase('https://gamma.firebase.com/flashpatric/');</code></pre>
+						<aside class="notes">
+							The Firebase team talks of allowing each Firebase to have it's own subdomain ie. flashpatric.firebase.com
+						</aside>
+					</section>
+					<section>
+						<h2>Navigating in references</h2>
+						<br>
+						<div>child()</div>
+						<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">var users = ref.child('users');
 // users now refers to https://gamma.firebase.com/flashpatric/users</code></pre>
-					<div>parent()</div>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">var root = users.parent();
+						<div>parent()</div>
+						<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">var root = users.parent();
 // root now refers to https://gamma.firebase.com/flashpatric</code></pre>
-					<div>toString()&nbsp;</div>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">users.toString();
+						<div>toString()&nbsp;</div>
+						<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">users.toString();
 // returns the absolute URL to the reference's location</code></pre>
-				</section>
-				<section>
-					<h2>Dealing with data</h2>
-					<br><br>
-					<div>Write strings, booleans, numbers and objects</div>
-				</section>
-				<section>
-					<div>push(value, [onComplete])</div>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">var onComplete = function(success) { 
+					</section>
+					<section>
+						<h2>Dealing with data</h2>
+						<br><br>
+						<div>Write any data type supported by Javascript</div>
+
+						<aside class="notes">
+							strings, booleans, numbers and objects
+						</aside>
+					</section>
+					<section>
+						<div>push(value, [onComplete])</div>
+						<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">var onComplete = function(success) { 
     if(success) { ... } else { ... } 
 };
 ref.push({title:'Suidal Grls',author:'Ryn Str'}, onComplete);</code></pre>
-					<br>
-					<div>set(value, [onComplete])</div>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">ref.set({title:'Suicidal Girls',author:'Ryan Star'},&nbsp;onComplete);</code></pre>
-					<br>
-					<div>remove([onComplete])</div>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">ref.remove(onComplete);</code></pre>
-				</section>
-				<section>
-					<h2>Reading data</h2>
-					<br>
-					<br>
-					<div>Asynchronous callbacks</div>
-					<div>Called whenever data changes</div>
-					<div>Receives a data snapshot&nbsp;</div>
-				</section>
-				<section>
-					<br>
-					<div>on(eventType, callback)</div>
-					<div style="font-size: 24.0px;">EventTypes: <em>value, child_added, child_changed, child_removed, child_moved</em></div>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">var callback = function(dataSnapshot) { ... };
+						<br>
+						<div>set(value, [onComplete])</div>
+						<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">ref.set({title:'Suicidal Girls',author:'Ryan Star'},&nbsp;onComplete);</code></pre>
+						<br>
+						<div>remove([onComplete])</div>
+						<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">ref.remove(onComplete);</code></pre>
+						<aside class="notes">
+							Setting a nested javascript object the object properties will automaticly be mapped to child locations. foo.bar will be foo/bar. 
+						</aside>
+					</section>
+					<section>
+						<h2>Reading data</h2>
+						<br>
+						<br>
+						<div>
+							<p class="fragment">Asynchronous callbacks</p>
+							<p class="fragment">Called whenever data changes</p>
+							<p class="fragment">Receives a data snapshot&nbsp;</p>
+						</div>
+					</section>
+					<section>
+						<br>
+						<div>on(eventType, callback)</div>
+						<div style="font-size: 24.0px;">EventTypes: <em>value, child_added, child_changed, child_removed, child_moved</em></div>
+						<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">var callback = function(dataSnapshot) { ... };
 var added = ref.on('child_added', callback);</code></pre>
-					<br>
-					<div>off([eventType],[callback])</div>
-					<div style="font-size: 24.0px;"><em>...later on when all the beer is gone</em></div>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">ref.off('child_removed', callback); // removes callback</code></pre>
-				</section>
-				<section>
-					<h2>The query</h2>
-					<br>
-					<br>
-					<div>Filter down to a subset of data</div>
-					<div>Queries can be chained up to two calls</div>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">var query = ref.startAt('s').limit(50).on('child_added', callback);</code></pre>
-				</section>
-				<section>
-					<h2>The DataSnapshot</h2>
-					<br>
-					<br>
-					<div>The data returned from a query</div>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">var query = ref.limit(1000);
+						<br>
+						<div>off([eventType],[callback])</div>
+						<div style="font-size: 24.0px;"><em>...later on when all the beer is gone</em></div>
+						<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">ref.off('child_removed', callback); // removes callback</code></pre>
+					</section>
+					<section>
+						<h2>The query</h2>
+						<br>
+						<br>
+						<div>Filter down to a subset of data</div>
+						<div>Queries can be chained up to two calls</div>
+						<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">var query = ref.startAt('s').limit(50).on('child_added', callback);</code></pre>
+					</section>
+					<section>
+						<h2>The DataSnapshot</h2>
+						<br>
+						<br>
+						<div>The data returned from a query</div>
+						<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">var query = ref.limit(1000);
 query.on('child_added',function(dataSnapshot) {
 	// fetch the 1000 last children added
 });</code></pre>
-				</section>
-				<section>
-					<br>
-					<br>
-					<div>val()</div>
-					<div style="font-size: 24.0px;">The Javascript object representation of the DataSnapshot</div>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">var data = dataSnapshot.val();
+					</section>
+					<section>
+						<h2>DEMO</h2>
+						<br>
+						<div id="firebase_chat_link"></div>
+						<div id="firebase_chat"></div>
+					</section>
+					<section>
+						<h2>DEMO</h2>
+						<br>
+						<div id="firebase_drawing_link"></div>
+						<div id="firebase_drawing"></div>
+					</section>
+					<section>
+						<br>
+						<br>
+						<div>val()</div>
+						<div style="font-size: 24.0px;">The Javascript object representation of the DataSnapshot</div>
+						<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">var data = dataSnapshot.val();
 // string, number, boolean, an array, an object or null if empty</code></pre>
-				</section>
-				<section>
-					<br>
-					<div>hasChild() / hasChildren() / numChildren() / forEach()</div>
-					<div style="font-size: 24.0px;">Convenience methods for working with the DataSnapshot</div>
-					<br>
-					<div>ref()</div>
-					<div style="font-size: 24.0px;">Access the location generated with DataSnapshot</div>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">var personsRef = data.on('value',function(dataSnapshot) {
+					</section>
+					<section>
+						<br>
+						<div>hasChild() / hasChildren() / numChildren() / forEach()</div>
+						<div style="font-size: 24.0px;">Convenience methods for working with the DataSnapshot</div>
+						<br>
+						<div>ref()</div>
+						<div style="font-size: 24.0px;">Access the location generated with DataSnapshot</div>
+						<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">var personsRef = data.on('value',function(dataSnapshot) {
 	dataSnapshot.forEach(function(person) {
 		var name = person.name();
 		var data = person.val();
 	});
 	var dataRef = dataSnapshot.ref(); // same as personsRef
 });</code></pre>
+					</section>
 				</section>
-			</section>
-			<section>
 				<section>
-					<h2>Other features</h2>
-					<br>
-					<br>
-					<div>Order data with "priority"</div>
-					<div>Avoid concurrency problems with "transactions"</div>
-					<div>Presence data</div>
+						<h2>Other features</h2>
+						<br>
+						<br>
+						<div>
+							<p class="fragment">Order data with "priority"</p>
+							<p class="fragment">Avoid concurrency problems with "transactions"</p>
+							<p class="fragment">Presence data</p>
+						</div>
 				</section>
-			</section>
-			<section>
 				<section>
 					<h2>Accessing Firebase data</h2>
 					<br>
 					<br>
-					<div>From a client</div>
-					<div>From a REST interface</div>
-					<div>From a web browser</div>
+					<div>
+						<p class="fragment">From a client</p>
+						<p class="fragment">From a REST interface</p>
+						<p class="fragment">From a web browser</p>
+					</div>
+					<aside class="notes">
+						show the reference used https://gamma.firebase.com/flashpatric
+					</aside>
 				</section>
-			</section>
-			<section>
 				<section>
 					<h2>Integrations</h2>
 					<br>
 					<br>
-					<div>Backbone.js</div>
-					<div>Node.js</div>
-					<div>Trigger.io</div>
+					<div>
+						<p class="fragment">Backbone.js</p>
+						<p class="fragment">Node.js</p>
+						<p class="fragment">Trigger.io</p>
+					</div>
 				</section>
-			</section>
-			<section>
 				<section>
 					<h2>Predicting the future</h2>
 					<br>
 					<br>
 					<div>Authentication</div>
 				</section>
-			</section>
-			<section>
+				<section>
+					<h2>Links</h2>
+					<br>
+					<br>
+					<div><a href="http://www.firebase.com">http://www.firebase.com</a></div>
+				</section>
 				<section>
 					<h2>Thank you!</h2>
 					<br>
 					<br>
 					<div style="font-size: 3.77em;margin: 0 0 20px 0;color: #EEE;font-family: 'League Gothic', Impact, sans-serif;line-height: 0.9em;letter-spacing: 0.02em;text-transform: uppercase;text-shadow:0 1px 0 #CCC, 0 2px 0 #C9C9C9, 0 3px 0 #BBB, 0 4px 0 #B9B9B9, 0 5px 0 #AAA, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 20px 20px rgba(0, 0, 0, 0.15);">Questions</div>
 					<br>
-					<div style="font-size: 24.0px;"><em>@flashpatric <em>||</em> flashpatric@gmail.com</em></div>
+					<div style="font-size: 24.0px;"><a href="http://twitter.com/flashpatric">@flashpatric</a> || <a href="mailto:flashpatric@gmail.com">flashpatric@gmail.com</a></div>
 				</section>
-			</section>
-		</div>
-
-			<!-- <div class="slides">
-
-				<section>
-					<h1>Reveal.js</h1>
-					<h3>HTML Presentations Made Easy</h3>
-				</section>
-
-				<section>
-					<h2>Heads Up</h2>
-					<p>
-						reveal.js is a framework for easily creating beautiful presentations using HTML. You'll need a browser with
-						support for CSS 3D transforms to see it in its full glory.
-					</p>
-					<p>
-						<i><small>- <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small></i>
-					</p>
-
-					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
-					</aside>
-				</section>
-
-				<section>
-					<section>
-						<h2>Vertical Slides</h2>
-						<p>
-							Slides can be nested inside of other slides,
-							try pressing <a href="#/2/1">down</a>.
-						</p>
-						<a href="#/2/1" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 1</h2>
-						<p>Press down or up to navigate.</p>
-					</section>
-					<section>
-						<h2>Basement Level 2</h2>
-						<p>Cornify</p>
-						<a class="test" href="http://cornify.com">
-							<img width="280" height="326" src="https://s3.amazonaws.com/hakim-static/reveal-js/cornify.gif" alt="Unicorn">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 3</h2>
-						<p>That's it, time to go back up.</p>
-						<a href="#/2" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
-					</section>
-				</section>
-
-				<section>
-					<h2>Point of View</h2>
-					<p>
-						Press <strong>ESC</strong> to enter the slide overview. Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
-					</p>
-				</section>
-
-				<section>
-					<h2>rvl.io</h2>
-					<p>
-						If you don't like writing slides in HTML you can use the online editor <a href="http://www.rvl.io" target="_blank">rvl.io</a>.
-					</p>
-				</section>
-
-				<section>
-					<h2>Works in Mobile Safari</h2>
-					<p>
-						Try it out! You can swipe through the slides and pinch your way to the overview.
-					</p>
-				</section>
-
-				<section>
-					<h2>Marvelous Unordered List</h2>
-					<ul>
-						<li>No order here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>Fantastic Ordered List</h2>
-					<ol>
-						<li>One is smaller than...</li>
-						<li>Two is smaller than...</li>
-						<li>Three!</li>
-					</ol>
-				</section>
-
-				<section data-markdown>
-					<script type="text/template">
-						## Markdown support
-
-						For those of you who like that sort of thing. Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
-
-							<section data-markdown>
-							  ## Markdown support
-
-							  For those of you who like that sort of thing.
-							  Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
-							</section>
-					</script>
-				</section>
-
-				<section id="transitions">
-					<h2>Transition Styles</h2>
-					<p>
-						You can select from different transitions, like: <br>
-						<a href="?transition=cube#/transitions">Cube</a> -
-						<a href="?transition=page#/transitions">Page</a> -
-						<a href="?transition=concave#/transitions">Concave</a> -
-						<a href="?transition=zoom#/transitions">Zoom</a> -
-						<a href="?transition=linear#/transitions">Linear</a> -
-						<a href="?transition=none#/transitions">None</a> -
-						<a href="?#/transitions">Default</a>
-					</p>
-				</section>
-
-				<section id="themes">
-					<h2>Themes</h2>
-					<p>
-						Reveal.js comes with a few themes built in: <br>
-						<a href="?theme=sky#/themes">Sky</a> -
-						<a href="?theme=beige#/themes">Beige</a> -
-						<a href="?theme=simple#/themes">Simple</a> -
-						<a href="?theme=serif#/themes">Serif</a> -
-						<a href="?#/themes">Default</a>
-					</p>
-					<p>
-						<small>
-							* Theme demos are loaded after the presentation which leads to flicker. In production you should load your theme in the <code>&lt;head&gt;</code> using a <code>&lt;link&gt;</code>.
-						</small>
-					</p>
-				</section>
-
-				<section>
-					<section data-state="alert">
-						<h2>Global State</h2>
-						<p>
-							Set <code>data-state="something"</code> on a slide and <code>"something"</code>
-							will be added as a class to the document element when the slide is open. This lets you
-							apply broader style changes, like switching the background.
-						</p>
-						<a href="#/7/1" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-state="blackout">
-						<h2>"blackout"</h2>
-						<a href="#/7/2" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-state="soothe">
-						<h2>"soothe"</h2>
-						<a href="#/7/0" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
-					</section>
-				</section>
-
-				<section data-state="customevent">
-					<h2>Custom Events</h2>
-					<p>
-						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
-					</p>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">Reveal.addEventListener( 'customevent', function() {
-	console.log( '"customevent" has fired' );
-} );
-					</code></pre>
-				</section>
-
-				<section>
-					<h2>Clever Quotes</h2>
-					<p>
-						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						The nice thing about standards is that there are so many to choose from</q> and block:
-					</p>
-					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
-						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.
-					</blockquote>
-				</section>
-
-				<section>
-					<h2>Pretty Code</h2>
-					<pre><code contenteditable>
-function linkify( selector ) {
-  if( supports3DTransforms ) {
-
-    var nodes = document.querySelectorAll( selector );
-
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
-
-      if( !node.className ) ) {
-        node.className += ' roll';
-      }
-    };
-  }
-}
-					</code></pre>
-					<p>Courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
-				</section>
-
-				<section>
-					<h2>Intergalactic Interconnections</h2>
-					<p>
-						You can link between slides internally,
-						<a href="#/2/3">like this</a>.
-					</p>
-				</section>
-
-				<section>
-					<section>
-						<h2>Fragmented Views</h2>
-						<p>Hit the next arrow...</p>
-						<p class="fragment">... to step through ...</p>
-						<ol>
-							<li class="fragment"><code>any type</code></li>
-							<li class="fragment"><em>of view</em></li>
-							<li class="fragment"><strong>fragments</strong></li>
-						</ol>
-					</section>
-					<section>
-						<h2>Fragment Styles</h2>
-						<p>There's a few styles of fragments, like:</p>
-						<p class="fragment grow">grow</p>
-						<p class="fragment shrink">shrink</p>
-						<p class="fragment roll-in">roll-in</p>
-						<p class="fragment fade-out">fade-out</p>
-						<p class="fragment highlight-red">highlight-red</p>
-						<p class="fragment highlight-green">highlight-green</p>
-						<p class="fragment highlight-blue">highlight-blue</p>
-					</section>
-				</section>
-
-				<section>
-					<h2>Spectacular image!</h2>
-					<a class="image" href="http://lab.hakim.se/meny/" target="_blank">
-						<img width="320" height="299" src="http://s3.amazonaws.com/hakim-static/portfolio/images/meny.png" alt="Meny">
-					</a>
-				</section>
-
-				<section>
-					<h2>Export to PDF</h2>
-					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, below is an example that's been uploaded to SlideShare.</p>
-					<iframe id="slideshare" src="http://www.slideshare.net/slideshow/embed_code/13872948" width="455" height="356" style="margin:0;overflow:hidden;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe>
-					<script>
-						document.getElementById('slideshare').attributeName = 'allowfullscreen';
-					</script>
-				</section>
-
-				<section>
-					<h2>Take a Moment</h2>
-					<p>
-						Press b or period on your keyboard to enter the 'paused' mode. This mode is helpful when you want to take disctracting slides off the screen
-						during a presentation.
-					</p>
-				</section>
-
-				<section>
-					<h2>Stellar Links</h2>
-					<ul>
-						<li><a href="https://github.com/hakimel/reveal.js">Source code on GitHub</a></li>
-						<li><a href="http://hakim.se/projects/reveal-js">Leave feedback on my site</a></li>
-						<li><a href="http://twitter.com/hakimel">Follow me on Twitter</a></li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>It's free</h2>
-					<p>
-						reveal.js and <a href="http://www.rvl.io">rvl.io</a> are entirely free but if you'd like to support the projects you can donate below.
-						Donations will go towards hosting and domain costs.
-					</p>
-					<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-						<input type="hidden" name="cmd" value="_donations">
-						<input type="hidden" name="business" value="hakim.elhattab@gmail.com">
-						<input type="hidden" name="lc" value="US">
-						<input type="hidden" name="item_name" value="reveal.js / rvl.io">
-						<input type="hidden" name="no_note" value="0">
-						<input type="hidden" name="currency_code" value="USD">
-						<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
-						<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-					</form>
-				</section>
-
-				<section>
-					<h1>THE END</h1>
-					<h3>BY Hakim El Hattab / hakim.se</h3>
-				</section>
-
-			</div> -->
+			</div>
 
 		</div>
 
@@ -512,7 +274,10 @@ function linkify( selector ) {
 		<script src="js/reveal.min.js"></script>
 
 		<script>
-
+			$('#firebase_chat_link').html('<a href="http://'+ip+'/firebase_chat/">http://'+ip+'/firebase_chat/</a>');
+			$('#firebase_chat').qrcode({ text : 'http://'+ip+'/firebase_chat/' });
+			$('#firebase_drawing_link').html('<a href="http://'+ip+'/firebase_drawing/">http://'+ip+'/firebase_drawing/</a>');
+			$('#firebase_drawing').qrcode({ text : 'http://'+ip+'/firebase_drawing/' });
 			// Full list of configuration options available here:
 			// https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
